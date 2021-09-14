@@ -19,7 +19,6 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 
-import com.sanjay.app.model.Comment;
 import com.sanjay.app.model.Message;
 
 public class MessageRepo {
