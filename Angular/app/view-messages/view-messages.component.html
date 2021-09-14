@@ -1,0 +1,225 @@
+<div class="topnav body">
+  <!-- Centered link -->
+  <div class="topnav-centered"></div>
+
+  <!-- Left-aligned links (default) -->
+
+  <a [routerLink]="" class="active">View Posts</a>
+
+  <!-- Right-aligned links -->
+  <div class="topnav-right">
+    <a
+      *ngIf="authService.my_user.isAdmin === 'Y'"
+      [routerLink]=""
+      (click)="NavigateUsers()"
+      >View Registered Users</a
+    >
+
+    <a href="#" (click)="logout()">LogOut</a>
+    <a [routerLink]=""
+      ><i class="fa fa-fw fa-user"></i>{{ authService.my_user.name }}
+    </a>
+  </div>
+</div>
+<div class="main_div mt-3">
+  <div class="container mt-5" *ngIf="success == false && fail == false">
+    <h1 class="text-success">Welcome!!</h1>
+    <strong
+      ><p class="text-dark">
+        Please click here to view Posts
+        <span
+          ><button class="btn btn-outline-primary" (click)="getMessages()">
+            View
+          </button></span
+        >
+      </p></strong
+    >
+  </div>
+  <div class="container mt-4" *ngIf="success">
+    <form
+      class="form-inline mt-5"
+      #myForm="ngForm"
+      (ngSubmit)="addPost(myForm)"
+    >
+      <input
+        required
+        minlength="2"
+        maxlength="255"
+        class="form-control mr-sm-2"
+        type="text"
+        placeholder="Write something.."
+        name="message"
+        #message="ngModel"
+        [(ngModel)]="newMessage.message"
+      />
+      <button
+        [disabled]="myForm.pristine || myForm.invalid"
+        class="btn btn-success my-2 my-sm-0"
+        type="submit"
+      >
+        Add Post
+      </button>
+    </form>
+
+    <div class="search-container">
+      <input
+        (keyup)="searchPostsByName()"
+        type="text"
+        placeholder="Search.."
+        #search="ngModel"
+        [(ngModel)]="searchModel.name"
+      />
+      <button class="button1" (click)="searchPostsByName()">
+        <i class="fa fa-search"></i></button
+      ><br />
+
+      <button
+        [disabled]="authService.my_user.uId === 0 || !authService.my_user.uId"
+        class="btn btn-primary mt-4"
+        (click)="getUserPosts()"
+      >
+        My Posts
+      </button><br />
+      <button class="btn btn-primary mt-4 " (click)="getMessages()">All Posts</button>
+
+    </div>
+    <div
+      class="card text-center my-5 my_width"
+      *ngFor="let dt of data; let i = index"
+    >
+      <div class="card-header">Featured</div>
+      <div class="card-body">
+        <h5 class="card-title">{{ dt.name }}</h5>
+        <p class="card-text">{{ dt.message }}</p>
+        <div class="row">
+          <div class="col">
+            <button
+              (click)="getComments(i)"
+              type="button"
+              class="btn btn-primary"
+            >
+              Comments
+              <span
+                *ngIf="showComments && commentsData[0].id === dt.id"
+                class="badge badge-light"
+                >{{ comment_count }}</span
+              >
+            </button>
+          </div>
+
+          <div class="col" *ngIf="authService.my_user.uId == data[i].uId">
+            <button
+              *ngIf="!showEditMessage"
+              class="btn btn-primary"
+              (click)="showEditMessage = true;showEditComment=false"
+            >
+              Edit
+            </button>
+            <form
+              *ngIf="showEditMessage"
+              class="form-inline mt-5"
+              #myForm2="ngForm"
+              (ngSubmit)="editPost(myForm2, i)"
+            >
+              <input
+                required
+                minlength="2"
+                maxlength="255"
+                class="form-control mr-sm-2"
+                type="text"
+                placeholder="Write something.."
+                name="message"
+                #message="ngModel"
+                [(ngModel)]="edit.message"
+              />
+              <button
+                [disabled]="myForm2.pristine || myForm2.invalid"
+                class="btn btn-success mt-3"
+                type="submit"
+              >
+              
+                Submit
+              </button>
+              <button type="button" class="btn btn-danger mt-3 ml-3" (click)="cancelEditMessage()">Cancel</button>
+            </form>
+          </div>
+          <div class="col">
+            <button
+              *ngIf="data[i].uId === authService.my_user.uId"
+              (click)="deleteMessage(i)"
+              class="btn btn-danger mx-3"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <button *ngIf="!showEditComment" class="btn btn-primary my-2" (click)="showEditComment=true;showEditMessage=false;my_id=data[i].id">Add Comment</button>
+        <form
+        class="form-inline my-2 frm2"
+        #myForm3="ngForm"
+        (ngSubmit)="addComment(myForm3, i)"
+        *ngIf="!showEditMessage && showEditComment && data[i].id===my_id"
+      >
+        <input
+          required
+          minlength="2"
+          maxlength="255"
+          class="form-control mr-sm-2"
+          type="text"
+          placeholder="Write something.."
+          name="comment"
+          #comment="ngModel"
+          [(ngModel)]="newComment.comment"
+        />
+        <button
+          [disabled]="myForm3.pristine || myForm3.invalid"
+          class="btn btn-success my-2 my-sm-0"
+          type="submit"
+        >
+          Add
+        </button>
+        <button
+          
+          class="btn btn-danger my-2 my-sm-0 ml-3"
+          type="button"
+          (click)="cancelEditComment()"
+        >
+          Cancel
+        </button>
+      </form>
+      </div>
+      <div
+        class="container"
+        *ngIf="showComments && commentsData[0].id === dt.id"
+      >
+        <div
+          class="card my_width my-3"
+          *ngFor="let cm of commentsData; let j = index"
+        >
+          <div class="card-body">
+            <h5 class="card-title">{{ cm.author }}</h5>
+            <p class="card-text">{{ cm.comment }}</p>
+            <a
+              *ngIf="
+                commentsData[j].uId === authService.my_user.uId ||
+                data[i].uId === authService.my_user.uId
+              "
+              [routerLink]=""
+              (click)="deleteComment(j, i)"
+              class="btn btn-danger"
+              >Delete</a
+            >
+          </div>
+          <div class="card-footer text-muted">
+            {{ cm.dateCreated.replace("T", " ") }}
+          </div>
+        </div>
+      </div>
+      <div class="card-footer text-muted">
+        {{ dt.dateCreated.replace("T", " ") }}
+      </div>
+    </div>
+  </div>
+</div>

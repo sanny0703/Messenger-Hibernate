@@ -1,0 +1,64 @@
+<!-- Top navigation -->
+<div class="topnav body">
+
+  <!-- Centered link -->
+  <div class="topnav-centered">
+    
+  </div>
+  
+  <!-- Left-aligned links (default) -->
+  <a [routerLink]="" (click)="NavigateMessages()">Posts</a>
+  
+  <!-- Right-aligned links -->
+  <div class="topnav-right">
+    <a *ngIf="authService.my_user.isAdmin==='Y'" [routerLink]="" (click)="NavigateUsers()">View Registered Users</a>
+    <a [routerLink]='' class="active" *ngIf="invalid">Login</a>
+    <a [routerLink]='' (click)="NavigateSignUp()"*ngIf="invalid">SignUp</a>
+    <a href="#" (click)="logout()"*ngIf="valid">LogOut</a>
+    <a [routerLink]="" *ngIf="valid" ><i class="fa fa-fw fa-user"></i>{{authService.my_user.name}} </a>
+  </div>
+  
+  
+</div>
+<div class="main_div mt-2">
+  
+<div class="container  mt-5 my_div1 ">
+  <h1 class="mb-5 text-white">Login</h1><hr>
+
+    <form #loginform =ngForm (ngSubmit)="submit(loginform)">
+      <div class="mb-3">
+        <label for="email" class="form-label text-white">Email address</label>
+        <input required #email= ngModel  email type="email" class="form-control" id="email" name="email"aria-describedby="emailHelp" [(ngModel)] ="user.email">
+        
+        <span class=" small text-danger" *ngIf="email.invalid&& email.dirty">Email is required</span>
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label text-white">Password</label>
+        <input  required #password = ngModel  minlength="4" maxlength="10" type="password" class="form-control" id="exampleInputPassword1" name="password" [(ngModel)]="user.password">
+        <span class=" small text-danger" *ngIf="password.invalid&& password.dirty">Password is required</span>
+      </div>
+      
+      
+      <div class="mb-3 mt-5">
+        <button  type="submit" [disabled] ="loginform.pristine || loginform.invalid" class="btn btn-success btn-block">Sign In</button>
+      </div>
+      <div class="mb-3 text-center">
+        <strong class="text-white">Not Yet Registered? </strong><button type ="button" class="btn btn-outline-primary " (click)="NavigateSignUp()">Sign Up</button>
+       </div>
+    </form>
+  </div>
+  <div  class="alert alert-success alert-dismissible fade show my_alert1" *ngIf="success" role="alert" >
+    <h3>Success!</h3>
+    <p>Signed in successfully!  </p>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="alert alert-danger alert-dismissible fade show my_alert2" *ngIf="fail" role="alert" >
+    <h3 class="text-dark">Oops!</h3>
+    <p>Please Check the Credentials</p>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+</div>

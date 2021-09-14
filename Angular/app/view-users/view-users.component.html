@@ -1,0 +1,47 @@
+<div class="topnav body">
+
+    <!-- Centered link -->
+    <div class="topnav-centered">
+      
+    </div>
+    
+    <!-- Left-aligned links (default) -->
+    
+    <a [routerLink]="" (click)="NavigatePosts()">Posts</a>
+    
+    <!-- Right-aligned links -->
+    <div class="topnav-right">
+      <a [routerLink]="" class="active">View Registered Users</a>
+      
+      <a href="#" (click)="logout()">LogOut</a>
+      <a [routerLink]=""  ><i class="fa fa-fw fa-user"></i>{{authService.my_user.name}} </a>
+    </div>
+    </div>
+<div class="main_div mt-3">
+
+    <div class="container mt-5" *ngIf="success==false && fail==false">
+        <h1 class="text-success">Welcome!!</h1>
+        <strong><p class="text-dark">Please click here to view Users <span><button class="btn btn-outline-success" (click)="getUsers()">View</button></span></p></strong>
+    </div>
+    <div class="container mt-3" *ngIf="success">
+        <div class="search-container">
+              <input (keyup)="searchUsersByName()" type="text" placeholder="Search.."  #search=ngModel [(ngModel)]="searchModel.name">
+              <button (click)="searchUsersByName()"><i class="fa fa-search"></i></button>
+
+          </div>
+        <div class="row mt-5" >
+            
+            <div class="col-sm-3 my-2" *ngFor="let dt of data">
+                <div class="card">
+                    <img class="card-img-top img-fluid" src="https://dt2sdf0db8zob.cloudfront.net/wp-content/uploads/2019/12/9-Best-Online-Avatars-and-How-to-Make-Your-Own-for-Free-image1-5.png" alt="Card image cap">
+                    <div class="card-block">
+                        <h4 class="card-title">{{dt.name}}</h4>
+                        <p class="card-text">{{dt.email}}</p>
+                        <p class="card-text"><small class="text-muted">{{dt.uId}}</small></p>
+                    </div>
+                </div>
+            </div>
+            </div>
+    </div>
+    
+</div>

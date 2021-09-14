@@ -1,0 +1,87 @@
+.main_div { 
+    background: url("src/assets/bg-2.webp") no-repeat center center fixed; 
+  min-height: 100%;
+  min-width: 100%;
+  position: absolute;
+  top: 0;
+  z-index: -1;
+  background-size: cover;
+  }
+  .body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  .topnav {
+    position: relative;
+    overflow: hidden;
+    background-color:#000080;
+  }
+  
+  .topnav a {
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+  
+  .topnav a:hover {
+    background-color:blue;
+    color: black;
+  }
+  
+  .topnav a.active {
+    background-color:#6a5acd	;
+    color: white;
+  }
+  
+  .topnav-centered a {
+    float: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .topnav-right   {
+    float: right;
+  }
+  .my_alert1{
+    background-color: #7FFF00;
+  }
+  .my_alert2{
+    background-color:#DC143C;
+  }
+  .search-container {
+    float: right;
+  }
+  
+  .search-container input[type=text] {
+    padding: 6px;
+    margin-top: 8px;
+    font-size: 17px;
+    border: none;
+  }
+  
+   .search-container .button1 {
+    float: right;
+    padding: 6px 10px;
+    margin-top: 8px;
+    margin-right: 16px;
+    background: #ddd;
+    font-size: 17px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .search-container .button1:hover {
+    background: #ccc;
+  }
+  .my_width{
+      max-width: 60%;
+  }
+  .frm2{
+    float:center;
+  }

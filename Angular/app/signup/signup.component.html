@@ -1,0 +1,63 @@
+<div class="topnav body">
+ 
+  
+  <a [routerLink]="" (click)="NavigatePosts()" >Posts</a>
+  <div class="topnav-centered" >
+    
+  </div>
+  <div class="topnav-right">
+    
+    <a [routerLink]="" (click)="NavigateSignIn()" >Log In</a>
+    <a class="active" >Sign Up</a>
+  </div>
+</div>
+<div class="main_div mt-4">
+  <div class="container mt-5 my_div1">
+    <h1 class="mt-0 mb-5 text-white"><strong>Sign Up</strong></h1><hr>
+      <form #signupform =ngForm (ngSubmit)="submit(signupform)">
+        <div class="mb-3">
+          <label for="email" class="form-label text-white"><strong>Email address</strong></label>
+          <input required #email= ngModel  email type="email" class="form-control" id="email" name="email"aria-describedby="emailHelp" [(ngModel)]="user.email">
+          
+          <span class=" small text-danger" *ngIf="email.invalid && email.dirty">Email is invalid</span>
+        </div>
+        <div class="mb-3">
+          <label for="name" class="form-label text-white"><strong>Name</strong></label>
+          <input minlength="5" required #name= "ngModel"   type="text" class="form-control" id="name" name="name"aria-describedby="emailHelp" [(ngModel)]="user.name">
+          
+          <span class=" small text-danger" *ngIf="name.invalid&& name.dirty ">Name is required</span>
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label text-white"><strong>Password</strong></label>
+          <input  required #password = ngModel  minlength="4" maxlength="10" type="password" class="form-control" id="password" name="password" [(ngModel)]="user.password">
+          <span class=" small text-danger" *ngIf="password.invalid&& password.dirty">Password is required</span>
+        </div>
+        <div class="custom-control custom-checkbox mb-2 text-center">
+          <input  type="checkbox" required class="custom-control-input text-success" id="customCheck1" >
+          <label class="custom-control-label text-white" for="customCheck1">Agree to the terms and conditions</label>
+          
+        </div>
+        <div class="mb-3">
+          <button  type="submit" [disabled] ="signupform.pristine || signupform.invalid" class="btn btn-success btn-block">Sign Up</button>
+        </div>
+        
+        <div class="mb-3 text-center">
+         <strong class="text-white">Already Registered? </strong><button type ="button" class="btn btn-outline-primary " (click)="NavigateSignIn()">Sign In</button>
+        </div>
+      </form>
+    </div>
+    <div  class="alert alert-success alert-dismissible fade show my_alert1" *ngIf="success" role="alert" >
+      <h3>Success!</h3>
+      <p>Registration successful! Click here to <button class="btn btn-outline-primary" (click)="NavigateSignIn()">Sign In</button> </p>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="alert alert-danger alert-dismissible fade show my_alert2" *ngIf="fail" role="alert" >
+      <h3 class="text-danger">Oops!</h3>
+      <p>Registration Failed</p>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+</div>
