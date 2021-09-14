@@ -1,2 +1,4 @@
 # Messenger-Hibernate
-basic Messenger web app using jersey ,hibernate and Angular
+## Basic Messenger web app built using jersey, hibernate and Angular 12
+## Database: MySQL
+
